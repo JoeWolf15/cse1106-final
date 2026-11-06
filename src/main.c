@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <unisd.h>
+#include <unistd.h>
 #include <pigpio.h>
-#define PIN 17 // Change to the correct pin if needed
+#define PIN 26 // Change to the correct pin if needed
 
 int main(int argc, char* argv[]) {
 	gpioInitialise();
