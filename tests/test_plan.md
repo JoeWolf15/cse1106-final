@@ -1,7 +1,7 @@
 **Input**      |    **Expected Output**              |    **Actual Output**      |
-72F            |    Status: NORMAL  LED: OFF         |   
+72.3F            |    Status: NORMAL  LED: OFF         |   
 67F            |    Status: WARNING  LED: ON         |    
 76F            |    Status: NORMAL  LED: OFF         |    
 68F            |    Status: NORMAL  LED: OFF         |    
 0F             |    Status: WARNING  LED: ON         |    
-Average Temperature: 56.60F
+Average Temperature: 56.66F
