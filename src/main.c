@@ -1,9 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-//#include <unistd.h>
-//#include <pigpio.h>
+#include <unistd.h>
+#include <pigpio.h>
 #include <stdbool.h>
-#define PIN 26 // Change to the correct pin if needed
+#define PIN 17 // Change to the correct pin if needed
 #define READING_COUNT 5
 
 
@@ -18,6 +18,9 @@ int main(int argc, char* argv[]) {
 	double temperatures[READING_COUNT];
 	double lowerBound;
 	double upperBound;
+	gpioInitialise();
+	gpioSetMode(PIN, PI_OUTPUT);
+	
 
 	printf("Enter the Maximum Temperature: ");
 	scanf("%lf", &upperBound);
@@ -28,21 +31,28 @@ int main(int argc, char* argv[]) {
 
 		printf("Enter reading #%d:", i + 1);
 		scanf("%lf", &temperatures[i]);
+		{
+		if (isInRange(temperatures[i], upperBound, lowerBound)) {
+			gpioWrite(PIN, 0);
+	
+		}
+		else {
+			gpioWrite(PIN, 1);
+		}
+		
+		printf("Temperature Reading:\n");
+		if (isInRange(temperatures[i], upperBound, lowerBound)) {
+			printf("%.1f F \t | NORMAL \t | OFF\n", temperatures[i]);
+		} else printf("%.1f F \t | WARNING \t | ON\n", temperatures[i]);
+	}
 	}
 
-	displayReadings(temperatures, READING_COUNT, upperBound, lowerBound);
+	
 	printf("\nAverage Temperature: %.2f", calculateAverage(temperatures, READING_COUNT));
 	displayReadingsToFile(temperatures, READING_COUNT, upperBound, lowerBound);
 	
+	gpioTerminate();
 
-
-	/*gpioInitialise();
-	gpioSetMode(PIN, PI_OUTPUT);
-	gpioWrite(PIN, 1);// LED ON
-	getchar(); // waits for enter key
-	gpioWrite(PIN, 0); // LED OFF
-	getchar(); // waits for enter key
-	gpioTerminate(); */
 	return 0;
 }
 
@@ -84,3 +94,4 @@ void displayReadingsToFile(double temp[], int count, double upperBound, double l
 
 	fclose(fp);
 }
+
