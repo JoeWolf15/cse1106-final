@@ -4,3 +4,4 @@
 76F            |    Status: NORMAL  LED: OFF         |    
 68F            |    Status: NORMAL  LED: OFF         |    
 0F             |    Status: WARNING  LED: ON         |    
+Average Temperature : 
